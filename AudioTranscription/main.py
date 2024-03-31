@@ -38,6 +38,17 @@ def get_file_selection(files):
     choice = int(input("Select which file you want: "))
     print(f'You have selected {files[choice]}')
     return files[choice], list(files[choice].keys())[0]
+
+def transcribe_audio(file_dirs, client):
+    final_transcription = ""
+    for file_dir in file_dirs:
+        audio_file = open(file_dir, 'rb')
+        transcription = client.audio.transcriptions.create( model='whisper-1', file=audio_file)
+        audio_file.close()
+        final_transcription += transcription.text + "\n"
+    return final_transcription
+        
+
     
 
 OPEN_AI_API_KEY = os.getenv("OPEN_AI_API_KEY")
@@ -48,12 +59,19 @@ client = OpenAI(api_key=OPEN_AI_API_KEY)
 
 audio_path = 'audio_files'
 files = find_audio_files(audio_path, '.mp3')
-selectedAudio, file_path_key = get_file_selection(files)
-print(f'audio selected {selectedAudio} the key to file_path {file_path_key}')
+selectedAudio, title = get_file_selection(files)
+print(f'audio selected {selectedAudio} the key to file_path {title}')
 
-audio = pydub.AudioSegment.from_mp3(selectedAudio.get(file_path_key))
+audio = pydub.AudioSegment.from_mp3(selectedAudio.get(title))
 
 segment_dir = segment_audio(audio)
+
+transcription = transcribe_audio(segment_dir, client)
+
+with open(f'{title}_transcription.txt', 'w') as file:
+    file.write(transcription)
+
+
 
 for segment in segment_dir:
     os.remove(segment)
