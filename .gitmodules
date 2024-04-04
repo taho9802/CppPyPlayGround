@@ -1,0 +1,3 @@
+[submodule "learnPyTorch"]
+	path = learnPyTorch
+	url = https://github.com/taho9802/learnPyTorch
