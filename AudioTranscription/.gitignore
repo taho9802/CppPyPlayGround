@@ -1,2 +1,7 @@
 .env3.9.6
 .env
+.DS_Store
+How to Build a Fake OpenAI Server (so you can automate finance stuff).mp3_transcription.txt
+How to Code a AI Trading bot (so you can make $$$).mp3_transcription.txt
+audio_files/*
+Sample.mp3_transcription.txt
