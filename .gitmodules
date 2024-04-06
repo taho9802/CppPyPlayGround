@@ -1,3 +1,6 @@
 [submodule "learnPyTorch"]
 	path = learnPyTorch
 	url = https://github.com/taho9802/learnPyTorch
+[submodule "AudioTranscription"]
+	path = AudioTranscription
+	url = https://github.com/taho9802/AudioTranscription
